@@ -1,0 +1,36 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.animation as animation
+
+plt.style.use('_mpl-gallery')
+
+# Definición del intervalo del gráfico, párabola y recta tangente.
+
+x = np.linspace(-10, 10, 100)             # Intervalo del cálculo de la parábola.
+y = (x**2) / 2                            # Ecuación de la parábola.
+recta_tangente = 4 * x - 8                # Ecuacuión de la recta tangente.
+
+# Definición de los gráficos y de las cónicas en ellos.
+
+fig, ax = plt.subplots()                  # Varios gráficos definibles.
+
+point = np.linspace(3, 5)                 # Punto e intervalo del recorredor de la cónica entre x = 3 y x = 5.
+scat = ax.scatter(1, 0)                   # Scatter de la animación del punto.
+
+ax.plot(x, y, linewidth=2.0)              # Definición de la parábola en el gráfico.
+ax.plot(x, recta_tangente, linewidth=2.0) # Definición de la recta tangente a la parábola en (4, 8).
+ax.axis([-10, 10, -2, 10])                # Intervalo del eje mostrable.
+
+def animate(i):
+       """Función encargada de variar los distintos valores del punto animado."""
+       scat.set_offsets((i, (i**2)/2))
+       return scat
+
+ani = animation.FuncAnimation(
+       fig, animate,
+       repeat=True,
+       frames=point,
+       interval=100
+)                                         # Objeto animador del movimiento del punto.
+
+plt.show()                                # Mostrar todo lo descrito en el código.
