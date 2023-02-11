@@ -19,8 +19,8 @@ scat = ax.scatter(1, 0)                          # Scatter de la animación del 
 
 ax.plot(x, y, linewidth = 2.0)                   # Definición de la parábola en el gráfico.
 ax.plot(x, recta_tangente, linewidth = 2.0)      # Definición de la recta tangente a la parábola en (4, 8).
-ax.plot(3, (3**2) / 2, "ro", linewidth = 2.0)
-ax.plot(5, (5**2) / 2, "ro", linewidth = 2.0)
+ax.plot(3, (3**2) / 2, "ro", linewidth = 2.0)    # Punto inicial del intervalo.
+ax.plot(5, (5**2) / 2, "ro", linewidth = 2.0)    # Punto final del intervalo.
 ax.axis([-20, 20, -2, 30])                       # Intervalo del eje mostrable.
 
 def animate(i):
