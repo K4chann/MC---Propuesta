@@ -3,6 +3,10 @@ import numpy as np
 import matplotlib.animation as animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import *
+from tkinter import ttk
+
+#py -m pip install --upgrade pip
+#py -m pip install matplotlib
 
 # Definición de los gráficos y de las cónicas en ellos.
 
@@ -19,14 +23,22 @@ scat = ax.scatter(1, 0)                          # Scatter de la animación del 
 
 ax.plot(x, y, linewidth = 2.0)                   # Definición de la parábola en el gráfico.
 ax.plot(x, recta_tangente, linewidth = 2.0)      # Definición de la recta tangente a la parábola en (4, 8).
-ax.plot(3, (3**2) / 2, "ro", linewidth = 2.0)    # Punto inicial del intervalo.
-ax.plot(5, (5**2) / 2, "ro", linewidth = 2.0)    # Punto final del intervalo.
+ax.plot(3, 3 * 4 - 8, "ro", linewidth = 2.0)     # Punto inicial del intervalo.
+ax.plot(5, 5 * 4 - 8, "ro", linewidth = 2.0)     # Punto final del intervalo.
 ax.axis([-20, 20, -2, 30])                       # Intervalo del eje mostrable.
 
 def animate(i):
        """Función encargada de variar los distintos valores del punto animado."""
-       scat.set_offsets((i, (i**2) / 2))
+       scat.set_offsets((i, i * 4 - 8))
        return scat
+
+def stop():
+       """Función que para la animación."""
+       ani.event_source.stop()
+
+def start():
+       """Función que comienza la animación"""
+       ani.event_source.start()
 
 ani = animation.FuncAnimation(fig, animate, repeat=True, frames=point, interval=100)  # Objeto animador del movimiento del punto.
 
@@ -34,13 +46,22 @@ ani = animation.FuncAnimation(fig, animate, repeat=True, frames=point, interval=
 
 ventana = Tk()                                                        # Definición del objeto ventana.
 ventana.geometry("1000x1000")                                         # Ajuste del tamaño de la ventana.
-ventana.title("Reto de Matemáticas Computacionales")                  # Título de la ventana.
+ventana.title("Matemáticas Computacionales")                          # Título de la ventana.
 ventana.minsize(width = 1000, height = 1000)                          # Ajuste del tamaño mínimo de la ventana.
 
 frame = Frame(ventana, bg = "white", bd = 3)                          # Soporte para el visualizador gráfico.
 frame.pack(expand = 1, fill = "both")                                 # Ajustando el soporte dentro de la ventana.
 
+frame_botones = Frame(ventana, bg = "white", bd = 3)                  # Soporte para los botones.
+frame_botones.pack(expand = 1, fill = "both")                         #Ajustando el soporte dentro de la ventana.
+
 canvas = FigureCanvasTkAgg(fig, master = frame)                       # Definición de un canvas en la ventana.
 canvas.get_tk_widget().pack(padx=5, pady=5, expand=1, fill="both")    # Ajuste del canvas dentro de la ventana.
+
+button = ttk.Button(frame_botones, text="Parar", command=stop)        # Botón para parar la animación.
+button.pack(expand = 1, fill = "both")                                # Ajustando el botón dentro de la ventana.
+
+button_start = ttk.Button(frame_botones, text="Continuar", command=start)    # Botón para reanudar la animación.
+button_start.pack(expand = 1, fill = "both")                                 # Ajustando el botón dentro de la ventana.
 
 ventana.mainloop()
